@@ -1,0 +1,34 @@
+networks:
+  populostack:
+
+services:
+  grafana:
+    image: grafana/grafana-oss:${VGRAFANA}
+    container_name: populo-grafana
+    depends_on:
+      - influxdb
+    environment:
+      - GF_SERVER_ROOT_URL=/grafana
+      - GF_SERVER_SERVE_FROM_SUB_PATH=true
+      - GF_PATHS_CONFIG=/usr/local/etc/grafana/grafana.ini
+    env_file:
+      - ${CONF_DIR}/grafana/grafana.env
+    hostname: populo-grafana
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana-router=grafana-router@file"
+      - "traefik.http.routers.grafana-router.middlewares=grafana-mw@file"
+      - "traefik.http.routers.grafana-router.service=grafana@file"
+    networks:
+      - populostack
+    security_opt:
+      - "no-new-privileges:true"
+    volumes:
+      - grafana:/var/lib/grafana
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - ${CONF_DIR}/grafana/config:/usr/local/etc/grafana:ro
+      - ${CONF_DIR}/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+
+volumes:
+  grafana:
