@@ -1,0 +1,27 @@
+networks:
+  populostack:
+
+services:
+  influxdb:
+    image: influxdb:${VINFLUXDB}
+    container_name: populo-influxdbv1
+    environment:
+      - INFLUXDB_HTTP_AUTH_ENABLED=true
+      - INFLUXDB_REPORTING_DISABLED=true
+      - INFLUXDB_DATA_QUERY_LOG_ENABLED=false
+      - INFLUXDB_HTTP_LOG_ENABLED=false
+      - INFLUXDB_CONTINUOUS_QUERIES_LOG_ENABLED=false
+    env_file:
+      - ${CONF_DIR}/influxdb/influxdb.env
+    hostname: populo-influxdb
+    networks:
+      - populostack
+    security_opt:
+      - "no-new-privileges:true"
+    volumes:
+      - influxdb:/var/lib/influxdb
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+
+volumes:
+  influxdb:
