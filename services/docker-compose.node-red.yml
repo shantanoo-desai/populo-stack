@@ -1,0 +1,33 @@
+networks:
+  populostack:
+
+services:
+  node-red:
+    image: nodered/node-red:${VNODERED}
+    container_name: populo-node-red
+    user: "${POPULO_USER}:${POPULO_GROUP}"
+    depends_on:
+      - influxdb
+      - mosquitto
+    environment:
+      - HTTP_ROOT=/nodered
+    env_file:
+      - ${CONF_DIR}/node-red/node-red.env
+    hostname: populo-node-red
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.node-red-router=node-red-router@file"
+      - "traefik.http.routers.node-red-router.middlewares=node-red-mw@file"
+      - "traefik.http.routers.node-red-service=node-red@file"
+    networks:
+      - populostack
+    security_opt:
+      - "no-new-privileges:true"
+    volumes:
+      - node-red:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - ${CONF_DIR}/node-red/data/settings.js:/data/settings.js
+
+volumes:
+  node-red:
