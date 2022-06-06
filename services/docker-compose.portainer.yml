@@ -1,0 +1,34 @@
+networks:
+  populostack:
+
+secrets:
+  portainer_admin_password:
+    file: ${CONF_DIR}/portainer/secrets/portainer_admin_password
+
+services:
+  portainer:
+    image: portainer/portainer-ce:${VPORTAINER}
+    container_name: populo-portainer
+    hostname: populo-portainer
+    command:
+      - '--admin-password-file=/run/secrets/portainer_admin_password'
+      - '--no-analytics'
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.portainer-router=portainer-router@file"
+      - "traefik.http.routers.portainer-router.middlewares=portainer-mw@file"
+      - "traefik.http.routers.portainer-router.service=portainer@file"
+    networks:
+      - populostack
+    secrets:
+      - portainer_admin_password
+    security_opt:
+      - "no-new-privileges:true"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+
+volumes:
+  portainer:
