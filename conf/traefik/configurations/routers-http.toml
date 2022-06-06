@@ -1,0 +1,31 @@
+[http]
+    [http.routers]
+
+        [http.routers.api-router]
+            rule = "PathPrefix(`/api`) || PathPrefix(`/dashboard`)"
+            entryPoints = ["web"]
+            middlewares = ["user-auth"]
+            service = "api@internal"
+        
+        [http.routers.chronograf-router]
+            rule = "PathPrefix(`/chronograf`)"
+            entryPoints = ["web"]
+            service = "chronograf"
+        
+        [http.routers.grafana-router]
+            rule = "PathPrefix(`/grafana`)"
+            entryPoints = ["web"]
+            middlewares = ["grafana-mw"]
+            service = "grafana"
+        
+        [http.routers.node-red-router]
+            rule = "PathPrefix(`/nodered`)"
+            middlewares = ["node-red-mw"]
+            entryPoints = ["web"]
+            service = "node-red"
+        
+        [http.routers.portainer-router]
+            rule = "PathPrefix(`/portainer`)"
+            entryPoints = ["web"]
+            middlewares = ["portainer-mw"]
+            service = "portainer"

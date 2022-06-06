@@ -1,0 +1,21 @@
+[http]
+    [http.services]
+        [http.services.chronograf]
+            [http.services.chronograf.loadBalancer]
+                [[http.services.chronograf.loadBalancer.servers]]
+                    url = "http://chronograf:8888"
+
+        [http.services.grafana]
+            [http.services.grafana.loadBalancer]
+                [[http.services.grafana.loadBalancer.servers]]
+                    url = "http://grafana:3000"
+
+        [http.services.node-red]
+            [http.services.node-red.loadBalancer]
+                [[http.services.node-red.loadBalancer.servers]]
+                    url = "http://node-red:1880/"
+        
+        [http.services.portainer]
+            [http.services.portainer.loadBalancer]
+                [[http.services.portainer.loadBalancer.servers]]
+                    url = "http://portainer:9000"

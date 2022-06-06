@@ -1,0 +1,31 @@
+networks:
+  populostack:
+
+services:
+  traefik:
+    image: traefik:${VTRAEFIK}
+    container_name: populo-traefik
+    depends_on:
+      - chronograf
+      - grafana
+      - influxdb
+      - mosquitto
+      - node-red
+      - portainer
+    ports:
+      - "80:80"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api-router=api-router@file"
+      - "traefik.http.routers.traefik-http-router.service=api@internal"
+    networks:
+      - populostack
+    security_opt:
+      - "no-new-privileges:true"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - ${CONF_DIR}/traefik/users:/etc/traefik/users:ro
+      - ${CONF_DIR}/traefik/traefik.toml:/etc/traefik/traefik.toml:ro
+      - ${CONF_DIR}/traefik/configurations:/etc/traefik/configurations

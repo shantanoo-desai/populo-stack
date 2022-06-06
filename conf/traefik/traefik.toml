@@ -1,0 +1,26 @@
+[global]
+    checkNewVersion = false
+    sendAnonymousUsage = false
+
+[api]
+    insecure = true
+    dashboard = true
+    debug = false
+
+[log]
+    level = "INFO"
+
+[entryPoints]
+    [entryPoints.web]
+        address = ":80"
+    [entryPoints.mqtt]
+        address = ":1883"
+
+[providers]
+    [providers.docker]
+        endpoint = "unix:///var/run/docker.sock"
+        exposedByDefault = "false"
+        network = "populo_populostack"
+    [providers.file]
+        directory = "/etc/traefik/configurations/"
+        watch = true

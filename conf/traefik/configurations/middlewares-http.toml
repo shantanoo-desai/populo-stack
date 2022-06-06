@@ -1,0 +1,20 @@
+[http]
+    [http.middlewares]
+        [http.middlewares.user-auth]
+            [http.middlewares.user-auth.basicAuth]
+                usersFile= "/etc/traefik/users"
+        
+        [http.middlewares.grafana-mw]
+            [http.middlewares.grafana-mw.stripPrefix]
+                prefixes = ["/grafana"]
+                forceSlash = false
+
+        [http.middlewares.node-red-mw]
+            [http.middlewares.node-red-mw.stripPrefix]
+                prefixes = ["/nodered"]
+                forceSlash = false
+
+        [http.middlewares.portainer-mw]
+            [http.middlewares.portainer-mw.stripPrefix]
+                prefixes = ["/portainer"]
+                forceSlash = false
