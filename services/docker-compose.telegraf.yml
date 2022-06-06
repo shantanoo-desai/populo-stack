@@ -1,0 +1,17 @@
+networks:
+  populostack:
+
+services:
+  telegraf:
+    image: telegraf:${VTELEGRAF}
+    container_name: populo-telegraf
+    depends_on:
+      - influxdb
+      - mosquitto
+    hostname: populo-telegraf
+    networks:
+      - populostack
+    security_opt:
+      - "no-new-privileges:true"
+    volumes:
+      - ${CONF_DIR}/telegraf/telegraf.populo.toml:/etc/telegraf/telegraf.conf:ro
