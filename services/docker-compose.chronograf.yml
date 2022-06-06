@@ -1,0 +1,30 @@
+networks:
+  populostack:
+
+services:
+  chronograf:
+    image: chronograf:${VCHRONOGRAF}
+    container_name: populo-chronograf
+    depends_on:
+      - influxdb
+    environment:
+      - BASE_PATH=/chronograf
+      - INFLUXDB_URL=http://populo-influxdb:8086
+    env_file:
+      - ${CONF_DIR}/chronograf/chronograf.env
+    hostname: populo-chronograf
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.chronograf-router=chronograf-router@file"
+      - "traefik.http.routers.chronograf-router.service=chronograf@file"
+    networks:
+      - populostack
+    security_opt:
+      - "no-new-privileges:true"
+    volumes:
+      - chronograf:/var/lib/chronograf
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+
+volumes:
+  chronograf:
