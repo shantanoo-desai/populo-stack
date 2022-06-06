@@ -1,0 +1,27 @@
+networks:
+  populostack:
+
+services:
+  mosquitto:
+    image: eclipse-mosquitto:${VMOSQUITTO}
+    container_name: populo-mosquitto
+    hostname: populo-mosquitto
+    user: "${POPULO_USER}:${POPULO_GROUP}"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.tcp.routers.mqtt-router=mqtt-router@file"
+      - "traefik.tcp.services.mosquitto=mosquitto@file"
+    expose:
+      - 1883
+    networks:
+      - populostack
+    security_opt:
+      - "no-new-privileges:true"
+    volumes:
+      - mosquitto-data:/mosquitto/data
+      - ${CONF_DIR}/mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+
+volumes:
+  mosquitto-data:
