@@ -38,8 +38,7 @@
 
     # Topics to subscribe to:
     topics = [
-        "populo/#",
-        "$SYS/#"
+        "populo/#"
     ]
 
     # Telegraf will also store the topic as a tag with name `topic`

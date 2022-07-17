@@ -8,6 +8,8 @@ services:
     depends_on:
       - influxdb
       - mosquitto
+    env_file:
+      - ${CONF_DIR}/telegraf/telegraf.env
     hostname: populo-telegraf
     networks:
       - populostack
