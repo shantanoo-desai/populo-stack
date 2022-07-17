@@ -22,9 +22,3 @@
             rule = "PathPrefix(`/nodered`)"
             entryPoints = ["web"]
             service = "node-red"
-        
-        [http.routers.portainer-router]
-            rule = "PathPrefix(`/portainer`)"
-            entryPoints = ["web"]
-            middlewares = ["portainer-mw"]
-            service = "portainer"

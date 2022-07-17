@@ -1,6 +1,3 @@
-networks:
-  populostack:
-
 secrets:
   portainer_admin_password:
     file: ${CONF_DIR}/portainer/secrets/portainer_admin_password
@@ -13,13 +10,8 @@ services:
     command:
       - '--admin-password-file=/run/secrets/portainer_admin_password'
       - '--no-analytics'
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.portainer-router=portainer-router@file"
-      - "traefik.http.routers.portainer-router.middlewares=portainer-mw@file"
-      - "traefik.http.routers.portainer-router.service=portainer@file"
-    networks:
-      - populostack
+    ports:
+      - "9000:9000"
     secrets:
       - portainer_admin_password
     security_opt:

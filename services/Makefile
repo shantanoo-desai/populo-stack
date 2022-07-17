@@ -1,4 +1,4 @@
-.PHONY: help gen-compose gen-full-stack gen-validate logs stack-down stack-up teardown
+.PHONY: help gen-compose gen-full-stack gen-validate logs portainer-up portainer-down stack-down stack-up teardown
 .SILENT: help
 
 include .env
@@ -39,10 +39,6 @@ ifeq (node-red, $(filter node-red,$(ARGS)))
 	COMPOSE_FILES:=$(COMPOSE_FILES) -f docker-compose.node-red.yml
 endif
 
-ifeq (portainer, $(filter portainer,$(ARGS)))
-	COMPOSE_FILES:=$(COMPOSE_FILES) -f docker-compose.portainer.yml
-endif
-
 ifeq (telegraf, $(filter telegraf,$(ARGS)))
 	COMPOSE_FILES:=$(COMPOSE_FILES) -f docker-compose.telegraf.yml
 endif
@@ -69,6 +65,12 @@ gen-validate:
 logs:
 	docker compose logs -f $(ARGS)
 
+portainer-down:
+	docker compose -f docker-compose.portainer.yml down
+
+portainer-up:
+	docker compose -f docker-compose.portainer.yml up -d
+
 stack-down:
 	docker compose --project-directory=$(RELEASE_DIR) down
 
@@ -77,4 +79,5 @@ stack-up:
 
 teardown:stack-down
 	docker compose --project-directory=$(RELEASE_DIR) down --volumes
+	docker compose -f docker-compose.portainer.yml down --volumes
 	rm -f $(RELEASE_DIR)/docker-compose.yml

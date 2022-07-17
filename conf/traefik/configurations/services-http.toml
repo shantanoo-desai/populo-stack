@@ -14,8 +14,3 @@
             [http.services.node-red.loadBalancer]
                 [[http.services.node-red.loadBalancer.servers]]
                     url = "http://node-red:1880/"
-        
-        [http.services.portainer]
-            [http.services.portainer.loadBalancer]
-                [[http.services.portainer.loadBalancer.servers]]
-                    url = "http://portainer:9000"
