@@ -23,7 +23,6 @@ gen-compose [service]
     influxdb
     mosquitto
     node-red
-    portainer
     telegraf
     traefik
 ```
@@ -71,7 +70,6 @@ logs [service]
     influxdb
     mosquitto
     node-red
-    portainer
     telegraf
     traefik
 ```
@@ -79,6 +77,24 @@ example usage:
 
 ```
 make logs traefik
+```
+
+### portainer-up
+
+Bring the portainer container up (standalone). Portainer is available at: http://localhost:9000
+
+example usage:
+
+```
+make portainer-up
+```
+
+### portainer-down
+
+Bring the portainer container down (standalone).
+
+```
+make portainer-down
 ```
 
 ### stack-down
@@ -106,6 +122,7 @@ make stack-up
 will do the following:
 
 - Bring the stack down
+- Bring the portainer container down
 - __Purge all the volumes__
 - __Remove the `docker-compose.yml` file__
 
