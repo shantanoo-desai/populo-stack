@@ -20,7 +20,6 @@
         
         [http.routers.node-red-router]
             rule = "PathPrefix(`/nodered`)"
-            middlewares = ["node-red-mw"]
             entryPoints = ["web"]
             service = "node-red"
         

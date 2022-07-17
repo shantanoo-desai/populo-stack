@@ -10,7 +10,7 @@ services:
       - influxdb
       - mosquitto
     environment:
-      - HTTP_ROOT=/nodered
+      - NODERED_HTTP_ROOT=/nodered
     env_file:
       - ${CONF_DIR}/node-red/node-red.env
     hostname: populo-node-red
@@ -27,7 +27,7 @@ services:
       - node-red:/data
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-      - ${CONF_DIR}/node-red/data/settings.js:/data/settings.js
+      - ${CONF_DIR}/node-red/data/settings.js:/data/settings.js:ro
 
 volumes:
   node-red:

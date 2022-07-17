@@ -9,11 +9,6 @@
                 prefixes = ["/grafana"]
                 forceSlash = false
 
-        [http.middlewares.node-red-mw]
-            [http.middlewares.node-red-mw.stripPrefix]
-                prefixes = ["/nodered"]
-                forceSlash = false
-
         [http.middlewares.portainer-mw]
             [http.middlewares.portainer-mw.stripPrefix]
                 prefixes = ["/portainer"]
