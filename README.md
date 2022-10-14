@@ -1,5 +1,7 @@
 # Populo Stack
 
+> NOTE: This Project is archived as there are some better ways to approach this stack!
+
 A completely customizable, pre-configured [Compose][1] Stack with some of the most Popular Containers.
 
 ## Containers
